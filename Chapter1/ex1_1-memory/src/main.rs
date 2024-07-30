@@ -17,7 +17,52 @@ fn listing1_2() {
     x = 43;
 }
 
+fn listing1_3() {
+    let x1 = 42;
+    let y1 = Box::new(84);
+    {
+        let z = (x1, y1);
+    }
+    let x2 = x1;
+    println!("{} {}", x1, x2);
+    // let y2 = y1;        // y1 went away when z was dropped
+}
+
+fn listing1_4() {
+    fn cache(input: &i32, sum: &mut i32) {
+        *sum = *input + *input;
+    }
+
+    let a = 5;
+    let mut b: i32 = 0;
+
+    cache(&a, &mut b);
+
+    assert_eq!(b, 2*a);
+}
+
+fn listing1_5() {
+    fn noalias(input: &i32, output: &mut i32) {
+        // since input is &T not &mut T, compiler can safely turn this into if{}else{}
+        if *input == 1 {
+            *output = 2;
+        } 
+        if *input != 1 {
+            *output = 3;
+        }
+    }
+
+    let mut a: i32 = 0;
+    noalias(&1, &mut a);
+    assert_eq!(a, 2);
+    noalias(&23, &mut a);
+    assert_eq!(a, 3);
+}
+
 fn main() {
     listing1_1();
     listing1_2();
+    listing1_3();
+    listing1_4();
+    listing1_5();
 }
