@@ -59,10 +59,40 @@ fn listing1_5() {
     assert_eq!(a, 3);
 }
 
+fn listing1_6() {
+    let x = 42;
+    let mut y = &x;
+    let z = &mut y;
+
+    println!("{}", z);
+
+    let x2 = 24;
+    *z = &x2;
+    println!("{}", y);
+}
+
+fn listing1_7() {
+    fn replace_with_84(s: &mut Box<i32>) {
+        let was = std::mem::take(s);
+        *s = was;
+        let mut r = Box::new(84);
+        std::mem::swap(s, &mut r);
+        assert_ne!(*r, 84);
+    }
+
+    let mut s = Box::new(42);
+    println!("{}", s);
+    replace_with_84(&mut s);
+    println!("{}", s);
+
+}
+
 fn main() {
     listing1_1();
     listing1_2();
     listing1_3();
     listing1_4();
     listing1_5();
+    listing1_6();
+    listing1_7();
 }
