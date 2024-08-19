@@ -1,3 +1,5 @@
+use rand::Rng;
+
 fn listing1_1() {
     let x = 42;
     let y = 43;
@@ -84,15 +86,42 @@ fn listing1_7() {
     println!("{}", s);
     replace_with_84(&mut s);
     println!("{}", s);
+}
 
+fn listing1_8() {
+    let mut rng = rand::thread_rng();
+
+    let mut x = Box::new(42);
+    let r = &x;
+    if rng.gen::<f64>() > 0.5 {
+        *x = 84;
+        // println!("{}", r);
+    } else {
+        println!("{}", r);
+    }
+    println!("{}", x);
+}
+
+fn listing1_9() {
+    let mut x = Box::new(42);
+    let mut z = &x;
+    for i in 0..100 {
+        println!("{}", z);
+        x = Box::new(i);
+        z = &x;
+    }
+    println!("{}", z);
 }
 
 fn main() {
-    listing1_1();
-    listing1_2();
-    listing1_3();
-    listing1_4();
-    listing1_5();
-    listing1_6();
-    listing1_7();
+    println!("---1.1---"); listing1_1();
+    println!("---1.2---"); listing1_2();
+    println!("---1.3---"); listing1_3();
+    println!("---1.4---"); listing1_4();
+    println!("---1.5---"); listing1_5();
+    println!("---1.6---"); listing1_6();
+    println!("---1.7---"); listing1_7();
+    println!("---1.8---"); listing1_8();
+    println!("---1.9---"); listing1_9();
+    println!("---------");
 }
